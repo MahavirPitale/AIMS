@@ -1,0 +1,86 @@
+<div class="container">
+  <div  [hidden]="submitted">
+    <h1>Complaint Form</h1>
+    <form (ngSubmit)="onSubmit()" #complaintsForm="ngForm">
+      
+      <div class="form-group">
+        <label for="company">Company</label>
+        <select class="form-control" [(ngModel)]="selectedCompany.id"
+                required name="selectedCompany"
+                #power="ngModel" >
+          <option *ngFor="let com of companies" value= {{com.id}}>{{com.name}}</option>
+        </select>
+        <!--<div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+          Company is required
+        </div>-->
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select class="form-control" 
+                required
+                [(ngModel)]="selectedCategory.id" name="selectedCategory"
+                #power="ngModel" >
+          <option *ngFor="let cat of categories" value= {{cat.id}}>{{cat.name}}</option>
+        </select>
+        <!--<div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+          Category is required
+        </div>-->
+      </div>
+
+      <div class="form-group">
+        <label for="ComplaintStatus">Complaint Status</label>
+        <select class="form-control"
+                required
+                [(ngModel)]="selectedComplaintStatus.id" name="selectedComplaintStatus"
+                #power="ngModel" >
+          <option *ngFor="let comStatus of ComplaintStatus" value= {{comStatus.id}}>{{comStatus.name}}</option>
+        </select>
+        <!--<div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+          Complaint Status is required
+        </div>-->
+      </div>
+
+      <div class="form-group">
+        From Date : <input type="date" [(ngModel)]="filterDateFrom" required   name="FromDate"/>
+        <div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+          From Date is required
+        </div> 
+        To Date : <input type="date" [(ngModel)]="filterDateTo" required name="ToDate"/>
+        <div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+          To Date is required
+        </div>       
+      </div>
+      
+      
+
+      <button type="submit" class="btn btn-default" [disabled]="!complaintsForm.form.valid">Submit</button>
+      <button type="button" class="btn btn-default" (click)="newComplaints(); complaintsForm.reset()">New Complaints</button>
+    </form>
+  </div>
+  <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Company</div>
+      <div class="col-xs-9 pull-left">{{ selectedCompany.id }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Category</div>
+      <div class="col-xs-9 pull-left">{{ selectedCategory.id }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Complaints Status</div>
+      <div class="col-xs-9 pull-left">{{ selectedComplaintStatus.id }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">From Date</div>
+      <div class="col-xs-9 pull-left">{{ filterDateFrom }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">To Date</div>
+      <div class="col-xs-9 pull-left">{{filterDateTo }}</div>
+    </div>
+    <br>
+    <button class="btn btn-default" (click)="submitted=false">Edit</button>
+  </div>
+</div>
